@@ -15,6 +15,8 @@ import java.io.Reader;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Created by Kevin on 3/28/2015.
@@ -30,10 +32,21 @@ public class DownloadWebpageTask extends AsyncTask<String, Void, String> {
         this.target = target;
     }
 
-    private TextView target;
+    private final TextView target;
+
     private String text = "OOPS WEB CODE FAILED";
     @Override
     protected String doInBackground(String... urls) {
+        final String url = urls[0];
+        final Timer timer = new Timer();
+
+            timer.schedule( new TimerTask() {
+                public void run() {
+                    new DownloadWebpageTask(target).execute(url);
+                }
+            }, 4000);
+
+
 
         // params comes from the execute() call: params[0] is the url.
         try {
@@ -44,6 +57,8 @@ public class DownloadWebpageTask extends AsyncTask<String, Void, String> {
             return e.toString();
         }
     }
+
+
     // onPostExecute displays the results of the AsyncTask.
     @Override
     protected void onPostExecute(String result) {

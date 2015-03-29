@@ -28,9 +28,13 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.Timer;
+import java.util.TimerTask;
 
 
 public class MainActivity extends Activity {
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +68,12 @@ public class MainActivity extends Activity {
 
 
     }
+
+
+
+    // And From your main() method or any other method
+
+
 
 //    public String readJSON(String url) throws IOException {
 //        StringBuilder builder = new StringBuilder();
