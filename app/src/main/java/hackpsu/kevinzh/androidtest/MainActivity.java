@@ -1,12 +1,33 @@
 package hackpsu.kevinzh.androidtest;
 
 import android.app.Activity;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.widget.TextView;
+
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.StatusLine;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
 
 
 public class MainActivity extends Activity {
@@ -19,18 +40,41 @@ public class MainActivity extends Activity {
         TextView welcome = (TextView)findViewById(R.id.textView);
         welcome.setVisibility(View.VISIBLE);
 
-        AlphaAnimation fadeIn = new AlphaAnimation(0.0f , 1.0f ) ;
-        AlphaAnimation fadeOut = new AlphaAnimation( 1.0f , 0.0f ) ;
-        fadeIn.setDuration(1200);
-        fadeIn.setFillAfter(true);
-        fadeOut.setDuration(1200);
-        fadeOut.setFillAfter(true);
-        fadeOut.setStartOffset(4200+fadeIn.getStartOffset());
+        String message = "SOMETHING WENT WRONG";
+//
+        new DownloadWebpageTask(welcome).execute(getString(R.string.ticker_url));
 
-        welcome.startAnimation(fadeIn);
-        welcome.startAnimation(fadeOut);
+        welcome.setText(message.toCharArray(),0,message.length());
+
+//        AlphaAnimation fadeIn = new AlphaAnimation(0.0f , 1.0f ) ;
+//        AlphaAnimation fadeOut = new AlphaAnimation( 1.0f , 0.0f ) ;
+//        fadeIn.setDuration(2000);
+//        fadeIn.setFillAfter(true);
+//        fadeOut.setDuration(2000);
+//        fadeOut.setFillAfter(true);
+//        fadeOut.setStartOffset(4200+fadeIn.getStartOffset());
+//
+//        welcome.startAnimation(fadeIn);
+//        welcome.startAnimation(fadeOut);
+
+
 
     }
+//    public String readJSON(String url) throws IOException {
+//        StringBuilder builder = new StringBuilder();
+//        URL warbsit = new URL(url);
+//        URLConnection connection = warbsit.openConnection();
+//        BufferedReader in = new BufferedReader(new InputStreamReader(
+//                connection.getInputStream()));
+//        String inputLine;
+//        while ((inputLine = in.readLine()) != null)
+//            builder.append(inputLine);
+//
+//        return builder.toString();
+//    }
+
+
+
 
 
     @Override
