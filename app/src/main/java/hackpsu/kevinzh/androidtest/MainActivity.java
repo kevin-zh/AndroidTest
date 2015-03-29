@@ -37,14 +37,18 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        System.out.println("--------------------NEW TEST-------------------------");
+
         TextView welcome = (TextView)findViewById(R.id.textView);
         welcome.setVisibility(View.VISIBLE);
 
         String message = "SOMETHING WENT WRONG";
+        welcome.setText(message.toCharArray(),0,message.length());
 //
         new DownloadWebpageTask(welcome).execute(getString(R.string.ticker_url));
 
         welcome.setText(message.toCharArray(),0,message.length());
+
 
 //        AlphaAnimation fadeIn = new AlphaAnimation(0.0f , 1.0f ) ;
 //        AlphaAnimation fadeOut = new AlphaAnimation( 1.0f , 0.0f ) ;
@@ -60,6 +64,7 @@ public class MainActivity extends Activity {
 
 
     }
+
 //    public String readJSON(String url) throws IOException {
 //        StringBuilder builder = new StringBuilder();
 //        URL warbsit = new URL(url);

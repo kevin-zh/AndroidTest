@@ -96,7 +96,7 @@ public class DownloadWebpageTask extends AsyncTask<String, Void, String> {
     // Reads an InputStream and converts it to a String.
     public String readIt(InputStream stream, int len) throws IOException, UnsupportedEncodingException {
         Reader reader = null;
-        reader = new InputStreamReader(stream, "UTF-8");
+        reader = new InputStreamReader(stream, "UTF-16");
         char[] buffer = new char[len];
         reader.read(buffer);
         return new String(buffer);
