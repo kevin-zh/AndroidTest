@@ -4,6 +4,10 @@ import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.TextView;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -51,9 +55,42 @@ public class DownloadWebpageTask extends AsyncTask<String, Void, String> {
         Log.d("~!@#$%^&*DEBUG*&^%$#@!~", "The result is " + result);
         Log.d("~!@#$%^&*DEBUG*&^%$#@!~", "The text is " + text);
 
-        target.setText(text.toCharArray(),0,text.length());
+        try {
+            String stuffToOutput = "";
+            JSONObject ticker = new JSONObject(result);
+            JSONArray currencies = ticker.names();
+            String aName;
+            JSONObject aCurrency;
+
+            for (int i = 0; i < currencies.length(); i++){
+                aName = currencies.getString(i);
+
+                aCurrency = ticker.getJSONObject(aName);
+
+                stuffToOutput += aName;
+                stuffToOutput += " (";
+                stuffToOutput += aCurrency.getString("symbol");
+                stuffToOutput += ") ";
+                stuffToOutput += aCurrency.getString("sell");
+                stuffToOutput += "\n";
+            }
+//            stuffToOutput += ticker.getJSONObject("USD").getString("symbol");
+//            stuffToOutput += (ticker.getJSONObject("USD").getDouble("sell")+"\n");
+//            stuffToOutput += ticker.getJSONObject("JPY").getString("symbol");
+//            stuffToOutput += (ticker.getJSONObject("JPY").getDouble("sell")+"\n");
+
+            outputString(stuffToOutput);
+        } catch (JSONException e) {
+            e.printStackTrace();
+            outputString("JSON ERROR :(\n" + text);
+        }
+
 
         super.onPostExecute(result);
+    }
+
+    private void outputString(String s){
+        target.setText(s.toCharArray(),0,s.length());
     }
 
 
